@@ -12,6 +12,8 @@ BLACK = (0, 0, 0)
 
 FPS = 60
 VEL = 3
+BULLET_VEL = 7
+MAX_BULLETS = 3
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55, 40
 BORDER_WIDTH = 10
 BORDER = pygame.Rect(WIDTH / 2 - (BORDER_WIDTH / 2), 0, BORDER_WIDTH, HEIGHT)
@@ -66,6 +68,8 @@ def red_handle_movement(keys_pressed, red):
 def main():
     yellow = pygame.Rect(300, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
     red = pygame.Rect(700, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+    red_bullets = []
+    yellow_bullets = []
 
     clock = pygame.time.Clock()
     run = True
@@ -74,6 +78,18 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LCTRL and len(yellow_bullets) < MAX_BULLETS:
+                    bullet = pygame.Rect(
+                        yellow.x + yellow.width, yellow.y + yellow.height / 2 - 2, 10, 5
+                    )
+                    yellow_bullets.append(bullet)
+
+                if event.key == pygame.K_RCTRL and len(red_bullets) < MAX_BULLETS:
+                    bullet = pygame.Rect(red.x, red.y + red.height / 2 - 2, 10, 5)
+                    red_bullets.append(bullet)
+
         keys_pressed = pygame.key.get_pressed()
         yellow_handle_movement(keys_pressed, yellow)
         red_handle_movement(keys_pressed, red)
