@@ -10,7 +10,7 @@ pygame = "*"
 black = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "*"
 
 [pipenv]
 allow_prereleases = true
